@@ -82,7 +82,8 @@ class GMP_Bin: #underground tunnel city corp. bin
 
             if grbg_name == 'Biodegradeable_garbage':
                 bio_bin_obj= Bio_bin()
-                bio_bin_obj = bio_bin_obj.add_garbage({'garbage_type':grbg_name,'amount':grbg_amount})
+                bio_bin_obj.add_garbage({'garbage_type':grbg_name,'amount':grbg_amount})
+                
             
             elif grbg_name == 'non_Biodegradeable_garbage':
                 non_bio_bin_obj = Non_Bio_bin({'garbage_type':grbg_name,'amount':grbg_amount})
@@ -97,14 +98,17 @@ class Bio_bin:
     #     self.bio_garbage= garbage
     #     bio_garbage_collection = []
     bio_garbage_collection = []
-
+    def __init__(self):
+        self.bio_garbage=[]
+    
     def add_garbage(self,garbage) :
-        self.bio_garbage= garbage
-        
+        self.bio_garbage.append(garbage)
 
     def printing_bio_bin_garbage(self):
+        print("Staring to print bio bin garbae----------->>>>>>")
         for grbg in self.bio_garbage:
             print(grbg)
+        print("Bio bin garbage print ends----------->>>>>>>>>>>")
 
 
 class Non_Bio_bin:
@@ -139,13 +143,6 @@ user1=user("admin","dhaka","empty","empty")
 
 #test start
 
-print("printing bio bin garbage")
-
-bio_bin_obj = Bio_bin()
-print(bio_bin_obj.printing_bio_bin_garbage())
-
-
-
 #test ends
 
 while(True):
@@ -153,7 +150,9 @@ while(True):
     print("***1 :to check user details Enter ***")
     print("\n***2 :to enter garbage to source bin Enter :***")
     print("\n***3 : To send garbage source to GMP_bin  Enter***")
-    print("***\n4 :to Exit Enter ***")
+    print("\n***4 : print all the garbage in bio garbage***")  #for testing
+
+    print("***\n5 :to logout  ***")
 
     choice = int(input("choice : "))
     if choice == 1 :
@@ -171,7 +170,12 @@ while(True):
 
     elif choice ==3:
         pass
-    elif choice == 4:
+
+    elif choice ==4:
+        bio_bin_obj = Bio_bin()
+        print(bio_bin_obj.printing_bio_bin_garbage())
+
+    elif choice == 5:
         print("Logging out ------")
         break
     
