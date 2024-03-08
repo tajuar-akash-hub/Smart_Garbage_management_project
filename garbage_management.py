@@ -21,9 +21,9 @@ def garbage_type_and_amount_selection():
         print("Please select any subtypes from here")
         for i in range(2):
             print(f'select {i} for {Garbage_sub_types[i]}')
-        select = int(input("Enter any number : "))
+        subtype_select = int(input("Enter any number : "))
         amount = int(input("Enter garbage amount"))
-        garbage_name = Garbage_types[select]
+        garbage_name = Garbage_sub_types[subtype_select]
         user_garbage_collection_in_source.append({'garbage_name':garbage_name,'amount':amount})
 
         
@@ -49,9 +49,11 @@ class user:
         pass
 
 class source_bin:
-    def __init__(self,garbage):
-        self.garbage=garbage
-        self.capacity=10
+    def __init__(self):
+        self.garbage=[]
+
+    def receive_garbage(self,garbage):
+        self.garbage.extend(garbage)
 
     def printing_all_garbage(self):
         print("Printing garbage details in source bin ")
@@ -59,28 +61,18 @@ class source_bin:
             print(grbg)
 
     def sending_garbage_to_GMP(self):
-        gmp_obj = GMP_Bin()
-        gmp_obj.receive_garbage_from_source(self.garbage)
-        gmp_obj.printing_gmp_garbage()
+        # gmp_bin_obj = GMP_Bin()
+        gmb_bin_obj.receive_garbage_from_source(self.garbage)
+        # gmb_bin_obj.printing_gmp_garbage()
 
 class GMP_Bin: #underground tunnel city corp. bin
     def __init__(self) :
         self.GMP_garbage=[]
 
+
     def receive_garbage_from_source(self,garbage_from_source):
         self.GMP_garbage.extend(garbage_from_source)
         # test function
-        # for grbg in garbage_from_source:
-        #     for j in grbg:
-        #         self.GMP_garbage.append(j)
-
-    # def printing_gmp_garbage(self):
-    #     print("****printing all garbage in gmp bins------\n")
-    #     for grbg in self.GMP_garbage:
-    #         for j in grbg:
-    #             print(j)
-    #     print("gmp bin garbage prints ends---------------\n")
-                
     def printing_gmp_garbage(self):
         print("****printing all garbage in gmp bins------\n")
         for grbg in self.GMP_garbage:
@@ -91,8 +83,7 @@ class GMP_Bin: #underground tunnel city corp. bin
 
     
     def allocation_of_garbage_to_bins(self):
-        bio_bin_obj= Bio_bin()
-
+        # bio_bin_obj= Bio_bin()
         #allocation all garbage to specific bins here 
         for grbg in self.GMP_garbage:
             grbg_name = grbg['garbage_name']
@@ -101,7 +92,6 @@ class GMP_Bin: #underground tunnel city corp. bin
 
             if grbg_name == 'Biodegradeable_garbage':
                 bio_bin_obj.add_garbage({'garbage_type':grbg_name,'amount':grbg_amount})
-                
             
             elif grbg_name == 'non_Biodegradeable_garbage':
                 non_bio_bin_obj = Non_Bio_bin({'garbage_type':grbg_name,'amount':grbg_amount})
@@ -116,15 +106,17 @@ class Bio_bin:
     #     self.bio_garbage= garbage
     #     bio_garbage_collection = []
     bio_garbage_collection = []
+
     def __init__(self):
         self.bio_garbage=[]
     
     def add_garbage(self,garbage):
-        self.bio_garbage.append(garbage)
+        # self.bio_garbage.append(garbage)
+        self.bio_garbage_collection.append(garbage)
 
     def printing_bio_bin_garbage(self):
         print("Staring to print bio bin garbae----------->>>>>>")
-        for grbg in self.bio_garbage:
+        for grbg in self.bio_garbage_collection:
             print(grbg)
         print("Bio bin garbage print ends----------->>>>>>>>>>>")
 
@@ -161,6 +153,9 @@ class user_billing_history:
 user1=user("admin","dhaka","empty","empty")
 
 #test start
+source_bin_obj = source_bin()
+gmb_bin_obj = GMP_Bin()
+bio_bin_obj= Bio_bin()
 
 #test ends
 
@@ -170,30 +165,39 @@ while(True):
     print("\n***2 :to enter garbage to source bin Enter :***")
     print("\n***3 : To send garbage source to GMP_bin  Enter***")
     print("\n***4 : print all the garbage in bio garbage***")  #for testing
+    print("\n***6 : print user_garbage_collection_in_source list ***")  #for testing
 
     print("***\n5 :to logout  ***")
 
     choice = int(input("choice : "))
-    if choice == 1 :
+    
+    if choice == 1:
         user1.print_user_details()
 
     elif choice == 2 :
         print("\nplease select garbage type first")
         garbage_type_selection_and_amount = garbage_type_and_amount_selection()  
        
-        source_bin_obj = source_bin(garbage_type_selection_and_amount)
+       #work of source bin obj start ----
+        source_bin_obj.receive_garbage(garbage_type_selection_and_amount)
+        source_bin_obj.printing_all_garbage()
         source_bin_obj.sending_garbage_to_GMP()
+        #work of source bin obj ends ----------
         
-
-        gmb_bin_obj = GMP_Bin()
+        #gmp bin obj start---------
+        
         gmb_bin_obj.allocation_of_garbage_to_bins()
+        
+        #gmp bin obj ends ----------------
 
     elif choice ==3:
         pass
 
     elif choice ==4:
-        bio_bin_obj = Bio_bin()
-        bio_bin_obj.printing_bio_bin_garbage()
+        pass
+    elif choice == 6:
+        for i in user_garbage_collection_in_source:
+            print(i)
 
     elif choice == 5:
         print("Logging out ------")
