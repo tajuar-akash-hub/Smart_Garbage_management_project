@@ -59,29 +59,47 @@ class source_bin:
             print(grbg)
 
     def sending_garbage_to_GMP(self):
-        gmp_obj = GMP_Bin(self.garbage)
+        gmp_obj = GMP_Bin()
+        gmp_obj.receive_garbage_from_source(self.garbage)
         gmp_obj.printing_gmp_garbage()
 
 class GMP_Bin: #underground tunnel city corp. bin
-   
-    def __init__(self,garbage_from_source) :
-        self.GMP_garbage= garbage_from_source
-        
+    def __init__(self) :
+        self.GMP_garbage=[]
+
+    def receive_garbage_from_source(self,garbage_from_source):
+        self.GMP_garbage.extend(garbage_from_source)
+        # test function
+        # for grbg in garbage_from_source:
+        #     for j in grbg:
+        #         self.GMP_garbage.append(j)
+
+    # def printing_gmp_garbage(self):
+    #     print("****printing all garbage in gmp bins------\n")
+    #     for grbg in self.GMP_garbage:
+    #         for j in grbg:
+    #             print(j)
+    #     print("gmp bin garbage prints ends---------------\n")
+                
     def printing_gmp_garbage(self):
         print("****printing all garbage in gmp bins------\n")
         for grbg in self.GMP_garbage:
+            # print(grbg['garbage_name'])
+            # print(grbg['amount'])
             print(grbg)
         print("gmp bin garbage prints ends---------------\n")
 
+    
     def allocation_of_garbage_to_bins(self):
+        bio_bin_obj= Bio_bin()
+
         #allocation all garbage to specific bins here 
-        
         for grbg in self.GMP_garbage:
             grbg_name = grbg['garbage_name']
             grbg_amount = grbg['amount']
+            print("printing from allocation ",grbg_name)
 
             if grbg_name == 'Biodegradeable_garbage':
-                bio_bin_obj= Bio_bin()
                 bio_bin_obj.add_garbage({'garbage_type':grbg_name,'amount':grbg_amount})
                 
             
@@ -101,7 +119,7 @@ class Bio_bin:
     def __init__(self):
         self.bio_garbage=[]
     
-    def add_garbage(self,garbage) :
+    def add_garbage(self,garbage):
         self.bio_garbage.append(garbage)
 
     def printing_bio_bin_garbage(self):
@@ -112,6 +130,7 @@ class Bio_bin:
 
 
 class Non_Bio_bin:
+     #make changed like Bio_bin
      def __init__(self,garbage) :
         self.non_bio_garbage= garbage
         non_bio_garbage_collection = []
@@ -161,19 +180,20 @@ while(True):
     elif choice == 2 :
         print("\nplease select garbage type first")
         garbage_type_selection_and_amount = garbage_type_and_amount_selection()  
-        #the garbage amount can be stored using dictionary
-        # capacity = input("Now enter source garbage capacity")
-        # source_bin_obj = source_bin(selection_and_amount,capacity,"warning message empty")
+       
         source_bin_obj = source_bin(garbage_type_selection_and_amount)
         source_bin_obj.sending_garbage_to_GMP()
-        source_bin_obj.printing_all_garbage()
+        
+
+        gmb_bin_obj = GMP_Bin()
+        gmb_bin_obj.allocation_of_garbage_to_bins()
 
     elif choice ==3:
         pass
 
     elif choice ==4:
         bio_bin_obj = Bio_bin()
-        print(bio_bin_obj.printing_bio_bin_garbage())
+        bio_bin_obj.printing_bio_bin_garbage()
 
     elif choice == 5:
         print("Logging out ------")
