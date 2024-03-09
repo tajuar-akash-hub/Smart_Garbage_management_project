@@ -22,11 +22,9 @@ def garbage_type_and_amount_selection():
         for i in range(2):
             print(f'select {i} for {Garbage_sub_types[i]}')
         subtype_select = int(input("Enter any number : "))
-        amount = int(input("Enter garbage amount"))
+        amount = int(input("Enter garbage amount "))
         garbage_name = Garbage_sub_types[subtype_select]
         user_garbage_collection_in_source.append({'garbage_name':garbage_name,'amount':amount})
-
-        
     return user_garbage_collection_in_source
 
 #for login mechanism 
@@ -50,24 +48,28 @@ class user:
 
 class source_bin:
     def __init__(self):
-        self.garbage=[]
+        self.source_garbage=[]
+    # source_garbage= []
 
     def receive_garbage(self,garbage):
-        self.garbage.extend(garbage)
+        self.source_garbage.extend(garbage)
 
     def printing_all_garbage(self):
-        print("Printing garbage details in source bin ")
-        for grbg in self.garbage:
+        print("Printing garbage details in source bin --------")
+        for grbg in self.source_garbage:
             print(grbg)
+        print("source bin priting ends------------------------")
+        
 
     def sending_garbage_to_GMP(self):
-        # gmp_bin_obj = GMP_Bin()
-        gmb_bin_obj.receive_garbage_from_source(self.garbage)
-        # gmb_bin_obj.printing_gmp_garbage()
+        gmp_bin_obj = GMP_Bin()
+        gmp_bin_obj.receive_garbage_from_source(self.source_garbage)
+        gmp_bin_obj.printing_gmp_garbage()
 
 class GMP_Bin: #underground tunnel city corp. bin
     def __init__(self) :
         self.GMP_garbage=[]
+    # GMP_garbage=[]
 
 
     def receive_garbage_from_source(self,garbage_from_source):
@@ -75,9 +77,8 @@ class GMP_Bin: #underground tunnel city corp. bin
         # test function
     def printing_gmp_garbage(self):
         print("****printing all garbage in gmp bins------\n")
+        # print(self.GMP_garbage)
         for grbg in self.GMP_garbage:
-            # print(grbg['garbage_name'])
-            # print(grbg['amount'])
             print(grbg)
         print("gmp bin garbage prints ends---------------\n")
 
@@ -153,8 +154,7 @@ class user_billing_history:
 user1=user("admin","dhaka","empty","empty")
 
 #test start
-source_bin_obj = source_bin()
-gmb_bin_obj = GMP_Bin()
+
 bio_bin_obj= Bio_bin()
 
 #test ends
@@ -179,14 +179,16 @@ while(True):
         garbage_type_selection_and_amount = garbage_type_and_amount_selection()  
        
        #work of source bin obj start ----
+        source_bin_obj = source_bin()
         source_bin_obj.receive_garbage(garbage_type_selection_and_amount)
         source_bin_obj.printing_all_garbage()
         source_bin_obj.sending_garbage_to_GMP()
         #work of source bin obj ends ----------
         
         #gmp bin obj start---------
+        # gmb_bin_obj = GMP_Bin()
         
-        gmb_bin_obj.allocation_of_garbage_to_bins()
+        # gmb_bin_obj.allocation_of_garbage_to_bins()
         
         #gmp bin obj ends ----------------
 
