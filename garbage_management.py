@@ -57,8 +57,7 @@ class source_bin:
         print("Printing garbage details in source bin --------")
         for grbg in self.source_garbage:
             print(grbg)
-        print("source bin priting ends------------------------")
-        
+        print("source bin printing ends------------------------")
 
     def sending_garbage_to_GMP(self):
         gmp_bin_obj = GMP_Bin()
@@ -70,8 +69,6 @@ class source_bin:
         gmp_bin_obj.allocation_of_garbage_to_bins()
         
         #test code ends --------------
-
-        
 
 class GMP_Bin: #underground tunnel city corp. bin
     def __init__(self) :
@@ -88,16 +85,9 @@ class GMP_Bin: #underground tunnel city corp. bin
             print(grbg)
         print("gmp bin garbage prints ends---------------\n")
 
-    
     def allocation_of_garbage_to_bins(self):
-        # bio_bin_obj= Bio_bin()
-        #allocation all garbage to specific bins here 
-        # print("dhuktechi*********")
-        #test code start
 
-        bio_bin_obj= Bio_bin()
-        
-        #test code ends
+        bio_garbage_temp=[]
 
         for grbg in self.GMP_garbage:
             grbg_name = grbg['garbage_name']
@@ -109,11 +99,10 @@ class GMP_Bin: #underground tunnel city corp. bin
                 # print("printing bio bin dictionary ",bio_garbage_dictionary)
 
                 #bio bin work start----------
-
+                bio_garbage_temp.append(bio_garbage_dictionary)
+                # print("printing bio garbage temp ",bio_garbage_temp)
                 
-                bio_bin_obj.add_garbage([bio_garbage_dictionary])
-
-                #bio bin work end ----------
+                bio_bin_obj.add_garbage(bio_garbage_temp)
             
             elif grbg_name == 'non_Biodegradeable_garbage':
                 non_bio_bin_obj = Non_Bio_bin({'garbage_type':grbg_name,'amount':grbg_amount})
@@ -124,18 +113,22 @@ class GMP_Bin: #underground tunnel city corp. bin
                 pass
 
 class Bio_bin:
-    bio_garbage_collection = []
+    # bio_garbage_collection = []
+    bio_main_garbage_collection = []
+    # bio_garbage_all=[]
+    # def __init__(self):
+    #     self.bio_garbage_collection=[]
+    
+    
     def add_garbage(self,garbage):
-        # self.bio_garbage.append(garbage)
-        self.bio_garbage_collection.extend(garbage)
-
-    def printing_bio_bin_garbage(self):
-        print("Staring to print bio bin garbae----------->>>>>>")
-        for grbg in self.bio_garbage_collection:
-            print(grbg)
-        # print(self.bio_garbage_collection)
-        print("Bio bin garbage print ends----------->>>>>>>>>>>")
-
+        # self.bio_garbage_collection=garbage
+        # print("this is bio garbage",garbage)
+        # self.bio_main_garbage_collection.append(garbage)
+        # print("printing from add garbage",garbage)
+        # self.bio_main_garbage_collection.append(garbage)
+        # print(garbage)
+        self.bio_main_garbage_collection=garbage
+    
 
 class Non_Bio_bin:
      #make changed like Bio_bin
@@ -166,7 +159,7 @@ user1=user("admin","dhaka","empty","empty")
 
 #test start
 
-
+bio_bin_obj=Bio_bin()
 
 #test ends
 
@@ -195,20 +188,15 @@ while(True):
         source_bin_obj.printing_all_garbage()
         source_bin_obj.sending_garbage_to_GMP()
         #work of source bin obj ends ----------
-        
-        #gmp bin obj start---------
-        # gmb_bin_obj = GMP_Bin()
-        
-        # gmb_bin_obj.allocation_of_garbage_to_bins()
-        
-        #gmp bin obj ends ----------------
+      
 
     elif choice ==3:
         pass
 
     elif choice ==4:
-        bio_bin_obj=Bio_bin()
-        bio_bin_obj.printing_bio_bin_garbage()
+        for grbg in bio_bin_obj.bio_main_garbage_collection:
+            print(grbg)
+
     elif choice == 6:
         for i in user_garbage_collection_in_source:
             print(i)
