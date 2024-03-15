@@ -113,22 +113,10 @@ class GMP_Bin: #underground tunnel city corp. bin
                 pass
 
 class Bio_bin:
-    # bio_garbage_collection = []
     bio_main_garbage_collection = []
-    # bio_garbage_all=[]
-    # def __init__(self):
-    #     self.bio_garbage_collection=[]
-    
     
     def add_garbage(self,garbage):
-        # self.bio_garbage_collection=garbage
-        # print("this is bio garbage",garbage)
-        # self.bio_main_garbage_collection.append(garbage)
-        # print("printing from add garbage",garbage)
-        # self.bio_main_garbage_collection.append(garbage)
-        # print(garbage)
         self.bio_main_garbage_collection=garbage
-    
 
 class Non_Bio_bin:
      #make changed like Bio_bin
